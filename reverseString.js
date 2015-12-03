@@ -11,5 +11,10 @@ var reverse1 = function(str) {
 };
 
 var reverse2 = function(str) {
+    console.log('hi');
     return str.split('').reverse().join('');
+};
+
+var reverse3 = function(str) {
+    return (str === '') ? '' : reverse3(str.substr(1)) + str.charAt(0);
 };
