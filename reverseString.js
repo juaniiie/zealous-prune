@@ -11,7 +11,6 @@ var reverse1 = function(str) {
 };
 
 var reverse2 = function(str) {
-    console.log('hi');
     return str.split('').reverse().join('');
 };
 
