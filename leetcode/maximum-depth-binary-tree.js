@@ -22,24 +22,19 @@ var maxDepth = function(root) {
            return depth;
         }
         
-        var left = findDepth(node.left, depth + 1);
-        
-        var right = findDepth(node.right, depth + 1);
-
-        if (left === undefined) {
-            left = 0;
-        }
-        if (right === undefined) {
-            right = 0;
+        if (node.left) {
+            findDepth(node.left, depth + 1);
         }
         
-        var depths = Math.max(left, right);
+        if (node.right) {
+            findDepth(node.right, depth + 1);
+        }
 
-        depthMax = Math.max(depthMax, depths);
+        depthMax = Math.max(depthMax, depth);
 
     };
 
-    findDepth(root, 0);
+    findDepth(root, 1);
 
     return depthMax;
   
