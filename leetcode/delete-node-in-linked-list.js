@@ -17,8 +17,13 @@
  Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are 
  given the third node with value 3, the linked list should 
  become 1 -> 2 -> 4 after calling your function
+
+ [0,1]
+
+ ListNode { val: 0, next: ListNode { val: 1, next: null } }
  */
 
 var deleteNode = function(node) {
-    
+     node.val = node.next.val;
+     node.next = node.next.next;
 };
