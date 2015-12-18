@@ -15,15 +15,17 @@ Note:
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var moveZeroes = function(nums) {
-    for(var i = 0; i < nums.length; i++) {
-       if( nums[i] === 0) { 
-            for(var j = i+1; j < nums.length; j++) {
-                var temp = nums[j-1];
-                nums[j-1] = nums[j];
-                nums[j] = temp;
 
-            }
-        }
+var moveZeroes = function(nums) {
+  
+  var count = 0;
+
+  for (var i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+        nums[count++] = nums[i];
     }
+  }
+  while(count < nums.length) {
+    nums[count++] = 0;
+  }
 };
