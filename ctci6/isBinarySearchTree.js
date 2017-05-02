@@ -32,7 +32,7 @@ class Tree {
 }
 
 // solution
-
+// 
 function isBST(tree) {
     if (!tree.root || !tree) {
         return false;
@@ -54,13 +54,21 @@ function isBST(tree) {
             return true;
         }
         // is not less than or equal to current node val
-        if (node.left.val > node.val && node.left.val !== node.val) {
+        if (node.left.val > node.val) {
             return false;
         }
         // is not greater than
-        // fix this
-        if (node.right.val < node.val && ) {
-
+        if (node.right.val <= node.val) {
+          return false;
         }
+
+        callback(node.val);
+
+        return followsBSTRules(node.left) && followsBSTRules(node.right);
     }
+
+    let leftComplies = followsBSTRules(tree.root.left);
+    let rightComplies = followsBSTRules(tree.root.right);
+
+    return (leftMax < tree.root.val && leftComplies) && (rightMin > tree.root.val && rightComplies);
 }
