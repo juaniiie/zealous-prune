@@ -37,38 +37,45 @@ function isBST(tree) {
     if (!tree.root || !tree) {
         return false;
     }
-
-    let leftMax = tree.root.left.val;
-    let rightMin = tree.root.right.val;
-
-    let getMin = function(val1, val2) {
-        return Math.min(val1, val2);
+    if (tree.root.left === null && tree.root.right === null) {
+      return true;
     }
-
-    let getMax = function(val1, val2) {
-        return Math.max(val1, val2);
+    
+    let limits = {
+      'leftMax': tree.root.val,
+      'rightMax': tree.root.val,
     }
-
-    function followsBSTRules(node, callback) {
-        if (!node) {
+  
+    function followsBSTRules(node, callback, limit) {
+        if (node === null) {
             return true;
         }
         // is not less than or equal to current node val
-        if (node.left.val > node.val) {
+        if (node.left && node.left.val > node.val) {
             return false;
         }
         // is not greater than
-        if (node.right.val <= node.val) {
+        if (node.right && node.right.val <= node.val) {
           return false;
         }
+        
+        callback(node.val, limits[limit]);
 
-        callback(node.val);
-
-        return followsBSTRules(node.left) && followsBSTRules(node.right);
+        return followsBSTRules(node.left, callback) && followsBSTRules(node.right, callback);
     }
 
-    let leftComplies = followsBSTRules(tree.root.left);
-    let rightComplies = followsBSTRules(tree.root.right);
+    let leftComplies = followsBSTRules(tree.root.left, Math.max, 'leftMax');
+    let rightComplies = followsBSTRules(tree.root.right, Math.min, 'rightMin');
 
-    return (leftMax < tree.root.val && leftComplies) && (rightMin > tree.root.val && rightComplies);
+    return (limits.leftMax < tree.root.val && leftComplies) && (limits.rightMin > tree.root.val && rightComplies);
 }
+
+let testTree = new Tree();
+
+let treeArray = [100, 20, 10, 5, 1, 2, 3, 7, 8, 9, 15, 35, 25, 30, 45];
+
+treeArray.forEach(function(v) {
+  testTree.add(v);
+});
+
+isBST(testTree);
