@@ -31,20 +31,24 @@ class Tree {
   }
 }
 
-// solution
-// 
+/**
+Solution:
+Time: O(N) where N is the number of nodes: visits everynode
+Space: O(log N) because of recursion, O(N) is worst case
+*/
 function isBST(tree) {
-    if (!tree.root || !tree) {
-        return false;
+    if (!tree) {
+        throw new Error('invalid tree');
     }
+    
     if (tree.root.left === null && tree.root.right === null) {
       return true;
     }
     
     let limits = {
-      'leftMax': tree.root.val,
-      'rightMax': tree.root.val,
-    }
+      'leftMax': Number.MIN_VALUE,
+      'rightMin': Number.MAX_VALUE,
+    };
   
     function followsBSTRules(node, callback, limit) {
         if (node === null) {
@@ -59,9 +63,9 @@ function isBST(tree) {
           return false;
         }
         
-        callback(node.val, limits[limit]);
+        limits[limit] = callback(node.val, limits[limit]);
 
-        return followsBSTRules(node.left, callback) && followsBSTRules(node.right, callback);
+        return followsBSTRules(node.left, callback, limit) && followsBSTRules(node.right, callback, limit);
     }
 
     let leftComplies = followsBSTRules(tree.root.left, Math.max, 'leftMax');
@@ -69,13 +73,3 @@ function isBST(tree) {
 
     return (limits.leftMax < tree.root.val && leftComplies) && (limits.rightMin > tree.root.val && rightComplies);
 }
-
-let testTree = new Tree();
-
-let treeArray = [100, 20, 10, 5, 1, 2, 3, 7, 8, 9, 15, 35, 25, 30, 45];
-
-treeArray.forEach(function(v) {
-  testTree.add(v);
-});
-
-isBST(testTree);
