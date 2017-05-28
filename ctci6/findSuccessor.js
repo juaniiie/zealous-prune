@@ -58,6 +58,7 @@ function findSucc(node) {
     while (parent) {
       if (parent.val > node.val) {
         possibleNext = parent;
+        break;
       }
       parent = parent.parent
     }
