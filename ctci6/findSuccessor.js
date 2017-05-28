@@ -34,42 +34,46 @@ class Tree {
 /**
  * Solution
  */
-function findSuccessor(node) {
-    if (!node) {
+function findRoot(node) {
+  let current = node;
+  let root = null;
+  while (current) {
+    if (!current.parent) {
+      root = current;
+    }
+    current = current.parent;
+  }
+  return root;
+}
+
+function findSuccessor(target) {
+    if (!target) {
         throw new Error('node cannot be null');
     }
-    let original = node;
-    let next = undefined;
-    let root = null;
+    let next;
+    let root = findRoot(target);
+    let found = false;
 
-    function findRoot() {
-        let n = node;
-        while (!root) {
-            if (!n.parent) {
-                root = n;
-            }
-            n = node.parent;
-        }
+    function inOrderSearch(node) {
+      if (!node) {
+        return;
+      }
+      if (found) {
+        next = node;
+        return;
+      }
+      
+      inOrderSearch(node.left);
+
+      if (node === target) {
+        found = true;
+      }
+      
+      inOrderSearch(node.right);
+
     }
-
-    findRoot();
-
-    function inOrder(node) {
-        if (!node || next) {
-            return;
-        }
-
-        inOrder(node.left);
-
-        if (node.val > original.val) {
-            next = node;
-            return;
-        }
-
-        inOrder(node.right);
-    }
-
-    inOrder(root);
+    
+    inOrderSearch(root);
 
     return next ? next.val : next;
 }
