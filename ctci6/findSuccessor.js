@@ -68,7 +68,7 @@ function findSuccessor(target) {
       if (node === target) {
         found = true;
       }
-      
+
       inOrderSearch(node.right);
 
     }
@@ -91,3 +91,4 @@ let testTree = new Tree();
 let testNode = testTree.root;
 
 findSuccessor(testNode);
+
