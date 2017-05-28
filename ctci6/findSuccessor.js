@@ -52,13 +52,14 @@ function findSucc(node) {
   if (node.right) {
     next = findLeftMost(node.right);
   } else if (!node.right) {
-    let levels = 0;
+    let parent = node;
+    let possibleNext;
     
-    while (levels !== 2) {
-      if (node.parent) {
-        possibleNext = node.parent;
+    while (parent) {
+      if (parent.val > node.val) {
+        possibleNext = parent;
       }
-      levels++;
+      parent = parent.parent
     }
     next = possibleNext;
   }
