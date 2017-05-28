@@ -34,48 +34,37 @@ class Tree {
 /**
  * Solution
  */
-function findRoot(node) {
+function findLeftMost(node) {
   let current = node;
-  let root = null;
-  while (current) {
-    if (!current.parent) {
-      root = current;
-    }
-    current = current.parent;
+
+  while(current && current.left) {
+    current = current.left
   }
-  return root;
+  return current;
 }
 
-function findSuccessor(target) {
-    if (!target) {
-        throw new Error('node cannot be null');
-    }
-    let next;
-    let root = findRoot(target);
-    let found = false;
+function findSucc(node) {
+  if (!node) {
+    throw new Error('node cannot be null');
+  }
+  let next;
 
-    function inOrderSearch(node) {
-      if (!node) {
-        return;
-      }
-      if (found) {
-        next = node;
-        return;
-      }
-      
-      inOrderSearch(node.left);
-
-      if (node === target) {
-        found = true;
-      }
-
-      inOrderSearch(node.right);
-
-    }
+  if (node.right) {
+    next = findLeftMost(node.right);
+  } else if (!node.right) {
+    let levels = 0;
     
-    inOrderSearch(root);
+    while (levels !== 2) {
+      if (node.parent) {
+        possibleNext = node.parent;
+      }
+      levels++;
+    }
+    next = possibleNext;
+  }
 
-    return next ? next.val : next;
+  return next ? next.val : next;
+
 }
 
 /**
@@ -91,4 +80,5 @@ let testTree = new Tree();
 let testNode = testTree.root;
 
 findSuccessor(testNode);
+
 
