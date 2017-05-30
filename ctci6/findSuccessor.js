@@ -33,6 +33,9 @@ class Tree {
 
 /**
  * Solution
+ * N is the number of nodes
+ * Time: worst case O(N)
+ * Space: O(1)
  */
 function findLeftMost(node) {
   let current = node;
@@ -43,7 +46,7 @@ function findLeftMost(node) {
   return current;
 }
 
-function findSucc(node) {
+function findSuccessor(node) {
   if (!node) {
     throw new Error('node cannot be null');
   }
