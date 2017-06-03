@@ -24,8 +24,10 @@ function findBuildOrder(projects, dependencies) {
             depend.set(duple[0], entry);
         }
     }
+    console.log('depend', depend.entries());
 
     let reqs = [];
+    let originalItem;
     function findReqDependencies(item, map) {
         let itemDependencies = map.get(item);
 
@@ -35,15 +37,18 @@ function findBuildOrder(projects, dependencies) {
             }
             return;
         }
-        
+        //2
         for (var i = 0; i < itemDependencies.length; i++) {
             let dependency = itemDependencies[i];
+            if (dependency === originalItem) {
+                throw new Error('dependencies are cyclical');
+            }
             findReqDependencies(itemDependencies[i], map);
             if (reqs.indexOf(dependency) === -1 && itemDependencies !== null) {
                 reqs.push(dependency);
             }
         }
-
+        //3
         if (reqs.indexOf(item) === -1) {
             reqs.push(item);
         }
@@ -51,14 +56,15 @@ function findBuildOrder(projects, dependencies) {
 
     for (let j = 0; j < projects.length; j++) {
         let project = projects[j];
+        originalItem = project;
         findReqDependencies(project, depend);
     }
     
     return reqs;
 }
 
-const pro = ['a', 'b', 'c', 'd', 'e', 'f'];
-const de = [['d', 'a'], ['b', 'f'], ['d', 'b'], ['a', 'f'], ['c', 'd']];
+const pro = [9, 1, 5, 6];
+const de = [[6, 5], [5, 1], [1, 9], [9, 5]];
 findBuildOrder(pro, de);
 
 // add dependency
