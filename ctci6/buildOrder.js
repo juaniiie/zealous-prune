@@ -10,8 +10,22 @@
  * Solution
  * 
  */
-function visit(visitedSet, project, result) {
-
+function visit(project, visited, result, graph) { 
+    if (result.indexOf(project) > -1) {
+        return;
+    }
+    if (visited.has(project) || !graph.has(project)) {
+        result.unshift(project);
+        visited.add(project);
+        return;
+    }
+    if (!visited.has(project)) {
+        visited.add(project);
+    }
+    let edges = graph.get(project);
+    for (let i = 0; i < edges.length; i++) {
+        visit(edges[i], visited, result, graph);
+    }
 }
 
 function buildGraph(dependencies) {
@@ -36,9 +50,15 @@ function findBuildOrder(projects, dependencies) {
     let visited = new Set();
     let result = [];
     let graph = buildGraph(dependencies);
-    
 
-    console.log('graph entries', graph.entries());
+
+    // console.log('graph entries', graph.entries());
+    
+    for (let i = 0; projects.length; i++) {
+        visit(projects[i], visited, result, graph);
+    }
+
+    console.log('result');
 
 }
 
