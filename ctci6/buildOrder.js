@@ -66,27 +66,7 @@ function findBuildOrder(projects, dependencies) {
     for (let i = 0; i < projects.length; i++) {
         visit(projects[i], visited, result, graph);
     }
-    console.log('result', result);
+
     return result;
 
 }
-
-const pro = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-const de = [
-        [2, 1],
-        [3, 1],
-        [4, 2],
-        [6, 2],
-        [5, 3],
-        [7, 3],
-        [8, 4],
-        [11, 8],
-        [12, 8],
-        [10, 6],
-        [10, 5],
-        [9, 7],
-        [13, 10],
-        [13, 9],
-        [14, 13]
-      ];
-findBuildOrder(pro, de);
