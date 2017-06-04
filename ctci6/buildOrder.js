@@ -8,12 +8,14 @@
 
 /**
  * Solution
- * 
+ * Time: O(N+M) where N is the number of projects and M is dependencies
+ * space O(N)
  */
 function visit(project, visited, result, graph) { 
     if (result.indexOf(project) > -1) {
         return;
     }
+    
     if (visited.has(project)) {
         throw new Error('dependencies are cyclic');
     }
@@ -63,9 +65,9 @@ function findBuildOrder(projects, dependencies) {
     let result = [];
     let graph = buildGraph(dependencies);
     
-    for (let i = 0; i < projects.length; i++) {
-        visit(projects[i], visited, result, graph);
-    }
+    projects.forEach(project => {
+        visit(project, visited, result, graph);
+    });
 
     return result;
 
