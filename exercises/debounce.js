@@ -10,19 +10,19 @@
  */
 
 function debounce(fn, delay) {
-  let timer = null;
+    let timer = null;
 
-  return function() {
-    let context = this;
+    return function() {
+        let context = this;
 
-    let args = arguments;
+        let args = arguments;
 
-    clearTimeout(timer);
+        clearTimeout(timer);
 
-    timer = setTimeout(function() {
-      fn.apply(context, args);
-    }, delay);
-  }
+        timer = setTimeout(function() {
+          fn.apply(context, args);
+        }, delay);
+    }
 }
 
 function foo(question) {
