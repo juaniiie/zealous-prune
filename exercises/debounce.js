@@ -13,7 +13,6 @@ function debounce(fn, delay) {
   let timer = null;
 
   return function() {
-    
     let context = this;
 
     let args = arguments;
