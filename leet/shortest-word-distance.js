@@ -42,6 +42,27 @@ var shortestDistance = function(words, word1, word2) {
     return minDistace; 
 };
 
-let testList = ['a', 'b'];
 
-console.log(shortestDistance(testList, 'a', 'b'));
+/**
+ * Better solution
+ */
+
+var shortestDistance = function(words, word1, word2) {
+    let minDistace = words.length;
+    let word1Index = -1;
+    let word2Index = -1;
+
+    words.forEach((word, i) => {
+        if (word === word1) {
+            word1Index = i;
+        }
+        if (word === word2) {
+            word2Index = i;
+        }
+        if (word1Index !== -1 && word2Index !== -1) {
+            minDistace = Math.min(minDistace, Math.abs(word1Index - word2Index));
+        }
+    });
+
+    return minDistace;
+};
