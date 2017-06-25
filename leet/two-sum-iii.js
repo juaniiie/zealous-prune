@@ -14,8 +14,8 @@
  * Initialize your data structure here.
  */
 var TwoSum = function() {
-    this.memo = {};
-    this.set = {};
+    this.memo = new Set();
+    this.available = new Map();
 };
 
 /**
@@ -24,19 +24,19 @@ var TwoSum = function() {
  * @return {void}
  */
 TwoSum.prototype.add = function(number) {
-    console.log('calling addwith', number);
-    if (!this.set.hasOwnProperty(number)) {
-        this.set[number] = true;
+    if (this.available.has(number)) {
+        this.available.set(number, this.available.get(number) + 1);
+    } else {
+        this.available.set(number, 1);
     }
-
-    for(let num in this.set) {
-        num = Number(num);
-        if (num !== number) {
-            this.memo[num + number] = true;
+    
+    this.available.forEach((count, num) => {
+        if (num === number && count > 1) {
+            this.memo.add(number + number);
+        } else if (num !== number) {
+            this.memo.add(num + number);
         }
-    }
-    console.log('memo', this.memo);
-    console.log('set', this.set);
+    });
 };
 
 /**
@@ -45,15 +45,12 @@ TwoSum.prototype.add = function(number) {
  * @return {boolean}
  */
 TwoSum.prototype.find = function(value) {
-    console.log('this.set', this.set);
-    console.log('this.memo', this.memo);
-    return this.memo.hasOwnProperty(value);
+    console.log('memo', this.memo);
+    return this.memo.has(value);
 };
 
 let test = new TwoSum();
 
-test.add(1);
-test.add(3);
-test.add(5);
+test.add(0);
 
-console.log(test.find(7));
+console.log(test.find(0));

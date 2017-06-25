@@ -5,7 +5,6 @@
  * time O(N log N) N is array length
  * space O(N) tree
  */
-
 class TreeNode {
   constructor(value) {
     this.val = value;
